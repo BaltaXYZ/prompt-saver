@@ -110,6 +110,12 @@
       <ul id="promptList" class="list" role="listbox" aria-label="Lista med sparade prompts">
         <li class="empty">Inga sparade prompts ännu.</li>
       </ul>
+      <div class="row">
+        <button id="export" class="outline">Exportera</button>
+        <button id="import" class="outline">Importera</button>
+        <input id="importFile" type="file" accept="application/json" hidden>
+      </div>
+      <div id="exportHelper" class="small" aria-live="polite"></div>
     </aside>
 
     <!-- EDITOR -->
@@ -156,7 +162,14 @@
       remove: document.getElementById('remove'),
       newBtn: document.getElementById('new'),
       search: document.getElementById('search'),
-      list: document.getElementById('promptList')
+      list: document.getElementById('promptList'),
+      copy: document.getElementById('copy'),
+      selectBtn: document.getElementById('select'),
+      clearBtn: document.getElementById('clear'),
+      export: document.getElementById('export'),
+      importBtn: document.getElementById('import'),
+      importFile: document.getElementById('importFile'),
+      exportHelper: document.getElementById('exportHelper')
     };
 
     // Ny lagringsstruktur
@@ -336,6 +349,122 @@
 
     // Sök/filter
     els.search.addEventListener('input', (e) => { renderList(e.target.value); });
+  
+    // === Export/Import (Backup & Återställ) ===
+    els.export.addEventListener('click', () => {
+      const items = loadItems();
+      const payload = { app: 'promptkopierare', version: 1, exportedAt: new Date().toISOString(), items };
+      const json = JSON.stringify(payload, null, 2);
+      try {
+        const blob = new Blob([json], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `prompts-${new Date().toISOString().slice(0,10)}.json`;
+        // Visa reservlänk/knapp för manuell nedladdning
+        els.exportHelper.innerHTML = '';
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = a.download;
+        link.textContent = 'Ladda ner fil (om det inte startar)';
+        els.exportHelper.appendChild(link);
+        // Trigga direktnedladdning
+        a.click();
+        setTimeout(() => { URL.revokeObjectURL(url); }, 5000);
+        showToast('Export startad');
+      } catch (e) {
+        try {
+          navigator.clipboard.writeText(json);
+          showToast('JSON kopierad till urklipp (fallback)');
+        } catch {
+          els.exportHelper.textContent = 'Kunde inte exportera. Kopiera JSON manuellt:';
+          const pre = document.createElement('pre');
+          pre.textContent = json;
+          pre.style.whiteSpace = 'pre-wrap';
+          pre.style.marginTop = '8px';
+          els.exportHelper.appendChild(pre);
+        }
+      }
+    });
+
+    els.importBtn.addEventListener('click', () => els.importFile.click());
+    els.importFile.addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const data = JSON.parse(text);
+        const incoming = (data && Array.isArray(data.items)) ? data.items : (Array.isArray(data) ? data : []);
+        if (!incoming.length) { showToast('Ingen data hittades'); return; }
+
+        const existing = loadItems();
+        const map = new Map(existing.map(it => [it.id, it]));
+
+        for (const it of incoming) {
+          if (!it || typeof it !== 'object') continue;
+          let id = it.id || uuid();
+          if (map.has(id)) id = uuid();
+          map.set(id, {
+            ...it,
+            id,
+            title: (it.title || '(Namnlös)').trim(),
+            text: (it.text || '').trim(),
+          });
+        }
+
+        const merged = Array.from(map.values()).sort((a,b) => (b.updatedAt||0) - (a.updatedAt||0));
+        saveItems(merged);
+        renderList(els.search.value);
+        showToast('Import klar');
+      } catch {
+        showToast('Kunde inte läsa filen');
+      } finally {
+        e.target.value = '';
+      }
+    });
+  
+    // === Kopiera / Markera / Rensa ===
+    els.copy.addEventListener('click', async () => {
+      const text = els.ta.value ?? '';
+      if (!text) { showToast('Inget att kopiera'); return; }
+      try {
+        // Fungerar på https (GitHub Pages) och med användargest
+        await navigator.clipboard.writeText(text);
+        showToast('Kopierat till urklipp');
+      } catch (err) {
+        try {
+          els.ta.focus(); els.ta.select();
+          const ok = document.execCommand('copy');
+          window.getSelection()?.removeAllRanges?.();
+          showToast(ok ? 'Kopierat (fallback)' : 'Kunde inte kopiera — använd Ctrl/Cmd+C');
+        } catch {
+          showToast('Kunde inte kopiera — använd Ctrl/Cmd+C');
+        }
+      }
+    });
+
+    els.selectBtn.addEventListener('click', () => {
+      els.ta.focus();
+      els.ta.select();
+      showToast('Markerat — Ctrl/Cmd+C för att kopiera');
+    });
+
+    els.clearBtn.addEventListener('click', () => {
+      if (els.ta.value && !confirm('Rensa texten?')) return;
+      els.ta.value = '';
+      if (!getCurrent()) localStorage.removeItem(LS_TEXT); // rensa bara autosave om ingen post är vald
+      updateStat();
+      els.ta.focus();
+      showToast('Rensat');
+    });
+
+    // === Mini-självtest ("testfall") ===
+    (function selfTest(){
+      const keys = ['title','desc','ta','save','update','remove','newBtn','search','list','copy','selectBtn','clearBtn','export','importBtn','importFile'];
+      const missing = keys.filter(k => !els[k]);
+      if(missing.length){ console.error('Init error – saknar element:', missing); }
+      else { console.log('Self-test OK', new Date().toISOString()); }
+    })();
   </script>
 </body>
 </html>
