@@ -13,21 +13,62 @@
     body{
       margin:0; min-height:100dvh; background:linear-gradient(135deg,#0b1020,#121a36 60%,#0b1020);
       color:var(--fg); font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      display:grid; place-items:center; padding:24px;
+      padding:24px; display:grid; place-items:stretch;
     }
+    .app{
+      display:grid; gap:16px; grid-template-columns: 320px 1fr; align-items:start;
+      width:min(1200px,96vw); margin-inline:auto;
+    }
+    @media (max-width: 900px){
+      .app{ grid-template-columns: 1fr; }
+    }
+
+    /* Sidebar */
+    .side{
+      background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15);
+      border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:16px;
+    }
+    .side h2{margin:0 0 10px; font-size:18px; font-weight:650}
+    .side .row{display:flex; gap:8px; align-items:center; margin:8px 0 12px}
+    .side input[type="search"]{
+      flex:1; border:1px solid rgba(148,163,184,.25); background:#0b1224; color:var(--fg);
+      border-radius:12px; padding:10px 12px; outline:none;
+    }
+    .list{
+      list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; max-height:65svh; overflow:auto;
+    }
+    .item{
+      border:1px solid rgba(148,163,184,.18); background:#0a1222; border-radius:12px; padding:10px 12px; cursor:pointer;
+      transition:.15s ease;
+    }
+    .item:hover{transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.35)}
+    .item[aria-selected="true"]{background:#0b1428; box-shadow: inset 0 0 0 3px var(--accent-2), 0 4px 16px rgba(0,0,0,.45);}
+    .item .t{font-weight:650}
+    .item .d{color:var(--muted); font-size:13px; margin-top:2px}
+    .empty{color:var(--muted); font-size:14px; border:1px dashed rgba(148,163,184,.25); border-radius:12px; padding:14px; text-align:center}
+
+    /* Editor card */
     .wrap{
-      width:min(900px,95vw); background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15);
+      background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15);
       border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:20px 20px 16px;
     }
-    h1{margin:0 0 10px; font-size:22px; font-weight:650}
-    .sub{color:var(--muted); margin-bottom:14px; font-size:14px}
-    textarea{
-      width:100%; height:48svh; min-height:260px; resize:vertical; border:1px solid rgba(148,163,184,.25);
-      border-radius:14px; background:#0b1224; color:var(--fg); padding:14px 14px 46px 14px; outline:none;
+    h1{margin:0 0 6px; font-size:22px; font-weight:650}
+    .sub{color:var(--muted); margin-bottom:16px; font-size:14px}
+
+    label{display:block; font-size:13px; color:#cbd5e1; margin:10px 0 6px}
+    input[type="text"], textarea{
+      width:100%; border:1px solid rgba(148,163,184,.25);
+      border-radius:14px; background:#0b1224; color:var(--fg); padding:12px 14px; outline:none;
       caret-color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
     }
+    #desc{min-height:72px; resize:vertical}
+    #ta{
+      height:44svh; min-height:220px; resize:vertical; padding-bottom:46px;
+    }
+
     .toolbar{
-      display:flex; gap:8px; align-items:center; margin-top:-40px; padding:0 8px 0 6px;
+      display:flex; gap:8px; align-items:center; margin-top:10px; padding:0 2px;
+      flex-wrap:wrap;
     }
     .grow{flex:1}
     .stat{color:var(--muted); font-size:12px; user-select:none}
@@ -40,6 +81,10 @@
     .ghost{border-color:rgba(148,163,184,.18); color:#cbd5e1}
     .copy{background:linear-gradient(135deg,var(--accent-2),var(--accent)); border-color:transparent; color:#05121f}
     .danger{border-color:rgba(239,68,68,.35); color:#fecaca}
+    .danger.armed{background:#7f1d1d; color:#fff; border-color:rgba(239,68,68,.7)}
+    .primary{border-color:transparent; background:linear-gradient(135deg,#22c55e,#16a34a); color:#05121f}
+    .outline{border-color:rgba(148,163,184,.25); background:#0b1224}
+
     .toast{
       position:fixed; left:50%; bottom:22px; transform:translate(-50%,30px);
       background:#0b1224; border:1px solid rgba(148,163,184,.25); color:#e5e7eb; padding:10px 14px; border-radius:12px;
@@ -54,87 +99,243 @@
   </style>
 </head>
 <body>
-  <main class="wrap" role="main">
-    <h1>Promptkopierare</h1>
-    <div class="sub">Klistra in eller skriv din prompt. Texten sparas lokalt och kan kopieras med ett klick.</div>
+  <div class="app">
+    <!-- SIDEBAR -->
+    <aside class="side" aria-label="Mina sparade prompts">
+      <h2>Mina prompts</h2>
+      <div class="row">
+        <input id="search" type="search" placeholder="Sök titel eller beskrivning…" aria-label="Sök"/>
+        <button id="new" class="outline">Ny prompt</button>
+      </div>
+      <ul id="promptList" class="list" role="listbox" aria-label="Lista med sparade prompts">
+        <li class="empty">Inga sparade prompts ännu.</li>
+      </ul>
+    </aside>
 
-    <textarea id="ta" placeholder="Klistra in din prompt här…"></textarea>
+    <!-- EDITOR -->
+    <main class="wrap" role="main">
+      <h1>Promptkopierare</h1>
+      <div class="sub">Skriv eller klistra in din prompt. Snart kan du spara flera varianter med titel och beskrivning.</div>
 
-    <div class="toolbar">
-      <div class="stat" id="stat">0 tecken</div>
-      <div class="grow"></div>
-      <button class="ghost" id="select">Markera allt</button>
-      <button class="danger" id="clear">Rensa</button>
-      <button class="copy" id="copy">Kopiera</button>
-    </div>
+      <label for="title">Titel</label>
+      <input id="title" type="text" placeholder="Kort, tydlig titel…"/>
+      <label for="desc">Beskrivning</label>
+      <textarea id="desc" placeholder="Vad är syftet med prompten? Vilka parametrar?"></textarea>
+      <label for="ta">Prompt</label>
+      <textarea id="ta" placeholder="Klistra in din prompt här…"></textarea>
 
-    <div class="row small">
-      <span>Tips: Klippbokskopiering funkar bäst på https/localhost. Den här sidan har även en äldre fallback.</span>
-    </div>
-  </main>
+      <div class="toolbar" aria-label="Verktygsfält">
+        <div class="stat" id="stat">0 tecken</div>
+        <div class="grow"></div>
+        <button class="outline" id="save">Spara</button>
+        <button class="outline" id="update" disabled>Uppdatera</button>
+        <button class="danger" id="remove" disabled>Ta bort</button>
+        <button class="ghost" id="select">Markera allt</button>
+        <button class="copy" id="copy">Kopiera</button>
+        <button class="ghost" id="clear">Rensa</button>
+      </div>
+
+      <div class="row small">
+        <span>Tips: Klippbokskopiering funkar bäst på https/localhost. Sidan har även en fallback.</span>
+      </div>
+    </main>
+  </div>
 
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    const ta = document.getElementById('ta');
-    const stat = document.getElementById('stat');
-    const toast = document.getElementById('toast');
-    const storageKey = 'promptkopierare:text';
+    // === Local Storage + Prompt Manager (Steg 2) ===
+    const els = {
+      title: document.getElementById('title'),
+      desc: document.getElementById('desc'),
+      ta: document.getElementById('ta'),
+      stat: document.getElementById('stat'),
+      toast: document.getElementById('toast'),
+      save: document.getElementById('save'),
+      update: document.getElementById('update'),
+      remove: document.getElementById('remove'),
+      newBtn: document.getElementById('new'),
+      search: document.getElementById('search'),
+      list: document.getElementById('promptList')
+    };
 
-    function updateStat(){
-      const len = ta.value.length;
-      stat.textContent = `${len} ${len === 1 ? 'tecken' : 'tecken'}`;
-    }
+    // Ny lagringsstruktur
+    const LS_TEXT = 'promptkopierare:text';                 // bakåtkompatibel auto-save för fristående textarea
+    const LS_ITEMS = 'promptkopierare:v2:items';            // array av objekt
+    const LS_CURRENT = 'promptkopierare:currentId';         // aktivt id
+
+    // Utils
+    const uuid = () => (crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random().toString(36).slice(2,8)}`);
+    const loadItems = () => {
+      try{ const arr = JSON.parse(localStorage.getItem(LS_ITEMS) || '[]'); return Array.isArray(arr) ? arr : []; }catch{ return []; }
+    };
+    const saveItems = (items) => localStorage.setItem(LS_ITEMS, JSON.stringify(items));
+    const getCurrent = () => localStorage.getItem(LS_CURRENT) || null;
+    const setCurrent = (id) => id ? localStorage.setItem(LS_CURRENT, id) : localStorage.removeItem(LS_CURRENT);
 
     function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(showToast.tid);
-      showToast.tid = setTimeout(()=> toast.classList.remove('show'), 1600);
+      els.toast.textContent = msg; els.toast.classList.add('show');
+      clearTimeout(showToast.tid); showToast.tid = setTimeout(()=> els.toast.classList.remove('show'), 1600);
+    }
+    function updateStat(){
+      const len = els.ta.value.length; els.stat.textContent = `${len} ${len === 1 ? 'tecken' : 'tecken'}`;
     }
 
-    // Init
-    ta.value = localStorage.getItem(storageKey) ?? '';
-    updateStat();
-    ta.addEventListener('input', () => {
-      localStorage.setItem(storageKey, ta.value);
-      updateStat();
-    });
-
-    // Buttons
-    document.getElementById('clear').addEventListener('click', () => {
-      if (ta.value && !confirm('Rensa texten?')) return;
-      ta.value = '';
-      localStorage.removeItem(storageKey);
-      updateStat();
-      ta.focus();
-      showToast('Rensat');
-    });
-
-    document.getElementById('select').addEventListener('click', () => {
-      ta.focus();
-      ta.select();
-      showToast('Markerat — Ctrl/Cmd+C för att kopiera');
-    });
-
-    document.getElementById('copy').addEventListener('click', async () => {
-      try {
-        // Modern, säkert läge (kräver https/localhost i vissa webbläsare)
-        await navigator.clipboard.writeText(ta.value);
-        showToast('Kopierat till urklipp');
-      } catch (err) {
-        // Fallback för fil:// eller äldre webbläsare
-        try {
-          ta.focus();
-          ta.select();
-          const ok = document.execCommand('copy');
-          window.getSelection()?.removeAllRanges?.();
-          showToast(ok ? 'Kopierat (fallback)' : 'Kunde inte kopiera — använd Ctrl/Cmd+C');
-        } catch (e2) {
-          showToast('Kunde inte kopiera — använd Ctrl/Cmd+C');
-        }
+    // UI state helpers
+    function setMode(mode){
+      // mode: 'new' | 'edit'
+      if(mode === 'new'){
+        els.update.disabled = true; els.remove.disabled = true; els.save.disabled = false;
+      }else{
+        els.update.disabled = false; els.remove.disabled = false; els.save.disabled = false; // tillåt spara som ny
       }
+    }
+    function highlightSelected(id){
+      [...els.list.querySelectorAll('.item[aria-selected]')].forEach(li=> li.setAttribute('aria-selected','false'));
+      const li = els.list.querySelector(`.item[data-id="${CSS.escape(id)}"]`);
+      if(li){ li.setAttribute('aria-selected','true'); li.scrollIntoView({block:'nearest'}); }
+    }
+
+    // Render lista
+    function renderList(filter=''){
+      const items = loadItems();
+      const term = filter.trim().toLowerCase();
+      const filtered = !term ? items : items.filter(it =>
+        it.title.toLowerCase().includes(term) ||
+        (it.desc||'').toLowerCase().includes(term) ||
+        (it.text||'').toLowerCase().includes(term)
+      );
+
+      els.list.innerHTML = '';
+      if(filtered.length === 0){
+        const li = document.createElement('li'); li.className='empty'; li.textContent = 'Inga sparade prompts ännu.'; els.list.appendChild(li);
+        return;
+      }
+      for(const it of filtered){
+        const li = document.createElement('li');
+        li.className = 'item';
+        li.setAttribute('role','option');
+        li.dataset.id = it.id;
+        li.innerHTML = `<div class="t">${escapeHTML(it.title || '(Namnlös)')}</div><div class="d">${escapeHTML(it.desc || '')}</div>`;
+        const isCur = it.id === getCurrent();
+        li.setAttribute('aria-selected', isCur ? 'true' : 'false');
+        li.title = `ID: ${it.id}`;
+        els.list.appendChild(li);
+      }
+      const cur = getCurrent(); if(cur) highlightSelected(cur);
+    }
+
+    // Editor helpers
+    function clearEditor(){
+      els.title.value = ''; els.desc.value = ''; els.ta.value = '';
+      updateStat(); setCurrent(null); setMode('new'); renderList(els.search.value);
+      // nollställ ev. beväpnad radera-knapp
+      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
+    }
+    function loadIntoEditor(item){
+      els.title.value = item.title || ''; els.desc.value = item.desc || ''; els.ta.value = item.text || '';
+      updateStat(); setCurrent(item.id); setMode('edit'); highlightSelected(item.id);
+      // nollställ ev. beväpnad radera-knapp
+      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
+    }
+
+    // Escape helper for safe HTML injection
+    function escapeHTML(s){
+      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
+    }
+
+    // Init: försök ladda aktiv prompt, annars fristående text (bakåtkompatibel)
+    (function init(){
+      const items = loadItems();
+      renderList('');
+      const curId = getCurrent();
+      if(curId){
+        const it = items.find(x => x.id === curId);
+        if(it) loadIntoEditor(it); else { setCurrent(null); }
+      }
+      if(!getCurrent()){
+        els.ta.value = localStorage.getItem(LS_TEXT) ?? '';
+        updateStat(); setMode('new');
+      }
+    })();
+
+    // Auto-stat + (endast i 'new'-läge) backcompat autosave av textarea
+    els.ta.addEventListener('input', () => {
+      if(!getCurrent()) localStorage.setItem(LS_TEXT, els.ta.value);
+      updateStat();
     });
+
+    // Ny prompt-knapp: rensa till nytt
+    els.newBtn.addEventListener('click', () => { clearEditor(); showToast('Ny tom prompt'); els.title.focus(); });
+
+    // Spara som ny
+    els.save.addEventListener('click', () => {
+      const title = els.title.value.trim();
+      const text = els.ta.value.trim();
+      if(!title && !text){ showToast('Lägg till minst titel eller prompt'); return; }
+      const item = {
+        id: uuid(),
+        title: title || '(Namnlös)',
+        desc: els.desc.value.trim(),
+        text,
+        createdAt: Date.now(),
+        updatedAt: Date.now()
+      };
+      const items = loadItems(); items.unshift(item); saveItems(items);
+      setCurrent(item.id); renderList(els.search.value); loadIntoEditor(item);
+      showToast('Prompt sparad');
+    });
+
+    // Uppdatera befintlig
+    els.update.addEventListener('click', () => {
+      const id = getCurrent(); if(!id){ showToast('Ingen vald att uppdatera'); return; }
+      const items = loadItems(); const idx = items.findIndex(x => x.id === id);
+      if(idx === -1){ showToast('Hittar inte posten'); return; }
+      items[idx] = { ...items[idx], title: els.title.value.trim() || '(Namnlös)', desc: els.desc.value.trim(), text: els.ta.value.trim(), updatedAt: Date.now() };
+      saveItems(items); renderList(els.search.value); highlightSelected(id);
+      showToast('Uppdaterad');
+    });
+
+    // Ta bort
+    els.remove.addEventListener('click', () => {
+      const id = getCurrent();
+      if(!id){ showToast('Välj en prompt i listan först'); return; }
+      const currentItem = loadItems().find(x => x.id === id);
+      const name = currentItem?.title || 'vald prompt';
+
+      // Tvåstegsradering (fallback när window.confirm blockeras i preview)
+      if(!els.remove.dataset.arm){
+        els.remove.dataset.arm = '1';
+        els.remove.classList.add('armed');
+        els.remove.textContent = 'Bekräfta borttag';
+        showToast(`Klicka igen för att ta bort "${name}"`);
+        clearTimeout(els.remove._armTid);
+        els.remove._armTid = setTimeout(()=>{
+          delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort';
+        }, 2500);
+        return;
+      }
+
+      // Andra klicket: genomför borttag
+      delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort';
+      const items = loadItems().filter(x => x.id !== id);
+      saveItems(items);
+      renderList(els.search.value);
+      clearEditor();
+      showToast('Borttagen');
+    });
+
+    // Lista: välj post
+    els.list.addEventListener('click', (e) => {
+      const li = e.target.closest('.item'); if(!li) return;
+      const id = li.dataset.id; const it = loadItems().find(x => x.id === id); if(!it) return;
+      // avväpna radera när man byter val
+      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
+      loadIntoEditor(it);
+    });
+
+    // Sök/filter
+    els.search.addEventListener('input', (e) => { renderList(e.target.value); });
   </script>
 </body>
 </html>
