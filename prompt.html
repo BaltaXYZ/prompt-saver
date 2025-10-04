@@ -15,68 +15,37 @@
       color:var(--fg); font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       padding:24px; display:grid; place-items:stretch;
     }
-    .app{
-      display:grid; gap:16px; grid-template-columns: 320px 1fr; align-items:start;
-      width:min(1200px,96vw); margin-inline:auto;
-    }
-    @media (max-width: 900px){
-      .app{ grid-template-columns: 1fr; }
-    }
+    .app{ display:grid; gap:16px; grid-template-columns: 320px 1fr; align-items:start; width:min(1200px,96vw); margin-inline:auto; }
+    @media (max-width: 900px){ .app{ grid-template-columns: 1fr; } }
 
     /* Sidebar */
-    .side{
-      background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15);
-      border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:16px;
-    }
+    .side{ background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15); border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:16px; }
     .side h2{margin:0 0 10px; font-size:18px; font-weight:650}
+    .side h3{margin:14px 0 6px; font-size:13px; font-weight:700; color:#cbd5e1}
     .side .row{display:flex; gap:8px; align-items:center; margin:8px 0 12px}
-    .side input[type="search"]{
-      flex:1; border:1px solid rgba(148,163,184,.25); background:#0b1224; color:var(--fg);
-      border-radius:12px; padding:10px 12px; outline:none;
-    }
-    .list{
-      list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; max-height:65svh; overflow:auto;
-    }
-    .item{
-      border:1px solid rgba(148,163,184,.18); background:#0a1222; border-radius:12px; padding:10px 12px; cursor:pointer;
-      transition:.15s ease;
-    }
+    .side input[type="search"]{ flex:1; border:1px solid rgba(148,163,184,.25); background:#0b1224; color:#0f172a; border-radius:12px; padding:10px 12px; outline:none; }
+    .list{ list-style:none; margin:0; padding:0; display:flex; flex-direction:column; gap:8px; max-height:65svh; overflow:auto; }
+    .item{ border:1px solid rgba(148,163,184,.18); background:#0a1222; border-radius:12px; padding:10px 12px; cursor:pointer; transition:.15s ease; }
     .item:hover{transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.35)}
-    .item[aria-selected="true"]{background:#0b1428; box-shadow: inset 0 0 0 3px var(--accent-2), 0 4px 16px rgba(0,0,0,.45);}
+    .item[aria-selected="true"]{background:#0b1428; box-shadow: inset 0 0 0 3px var(--accent-2), 0 4px 16px rgba(0,0,0,.45);}    
     .item .t{font-weight:650}
     .item .d{color:var(--muted); font-size:13px; margin-top:2px}
     .empty{color:var(--muted); font-size:14px; border:1px dashed rgba(148,163,184,.25); border-radius:12px; padding:14px; text-align:center}
 
     /* Editor card */
-    .wrap{
-      background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15);
-      border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:20px 20px 16px;
-    }
+    .wrap{ background:rgba(17,24,39,.9); border:1px solid rgba(148,163,184,.15); border-radius:var(--br); box-shadow:0 10px 30px rgba(0,0,0,.35); padding:20px 20px 16px; }
     h1{margin:0 0 6px; font-size:22px; font-weight:650}
     .sub{color:var(--muted); margin-bottom:16px; font-size:14px}
 
     label{display:block; font-size:13px; color:#cbd5e1; margin:10px 0 6px}
-    input[type="text"], textarea{
-      width:100%; border:1px solid rgba(148,163,184,.25);
-      border-radius:14px; background:#0b1224; color:var(--fg); padding:12px 14px; outline:none;
-      caret-color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.03);
-    }
+    input[type="text"], textarea{ width:100%; border:1px solid rgba(148,163,184,.25); border-radius:14px; background:#0b1224; color:var(--fg); padding:12px 14px; outline:none; caret-color:#fff; box-shadow:inset 0 1px 0 rgba(255,255,255,.03); }
     #desc{min-height:72px; resize:vertical}
-    #ta{
-      height:44svh; min-height:220px; resize:vertical; padding-bottom:46px;
-    }
+    #ta{ height:44svh; min-height:220px; resize:vertical; padding-bottom:46px; }
 
-    .toolbar{
-      display:flex; gap:8px; align-items:center; margin-top:10px; padding:0 2px;
-      flex-wrap:wrap;
-    }
+    .toolbar{ display:flex; gap:8px; align-items:center; margin-top:10px; padding:0 2px; flex-wrap:wrap; }
     .grow{flex:1}
     .stat{color:var(--muted); font-size:12px; user-select:none}
-    button{
-      appearance:none; border:1px solid rgba(148,163,184,.25); background:#0a1222; color:var(--fg);
-      padding:9px 14px; border-radius:12px; cursor:pointer; font-weight:600;
-      transition:.18s ease; box-shadow:0 1px 0 rgba(255,255,255,.04);
-    }
+    button{ appearance:none; border:1px solid rgba(148,163,184,.25); background:#0a1222; color:var(--fg); padding:9px 14px; border-radius:12px; cursor:pointer; font-weight:600; transition:.18s ease; box-shadow:0 1px 0 rgba(255,255,255,.04); }
     button:hover{transform:translateY(-1px); box-shadow:0 4px 14px rgba(0,0,0,.35)}
     .ghost{border-color:rgba(148,163,184,.18); color:#cbd5e1}
     .copy{background:linear-gradient(135deg,var(--accent-2),var(--accent)); border-color:transparent; color:#05121f}
@@ -85,17 +54,27 @@
     .primary{border-color:transparent; background:linear-gradient(135deg,#22c55e,#16a34a); color:#05121f}
     .outline{border-color:rgba(148,163,184,.25); background:#0b1224}
 
-    .toast{
-      position:fixed; left:50%; bottom:22px; transform:translate(-50%,30px);
-      background:#0b1224; border:1px solid rgba(148,163,184,.25); color:#e5e7eb; padding:10px 14px; border-radius:12px;
-      opacity:0; pointer-events:none; transition:.22s ease; box-shadow:0 8px 22px rgba(0,0,0,.45);
-      font-size:14px;
-    }
+    .toast{ position:fixed; left:50%; bottom:22px; transform:translate(-50%,30px); background:#0b1224; border:1px solid rgba(148,163,184,.25); color:#e5e7eb; padding:10px 14px; border-radius:12px; opacity:0; pointer-events:none; transition:.22s ease; box-shadow:0 8px 22px rgba(0,0,0,.45); font-size:14px; }
     .toast.show{opacity:1; transform:translate(-50%,0)}
     .row{display:flex; gap:8px; align-items:center; margin-top:10px}
-    .small{font-size:12px; color:var(--muted)}
+    .small{font-size:12px; color:#94a3b8}
     a.help{color:#a7f3d0; text-decoration:none}
     a.help:hover{text-decoration:underline}
+
+    /* Taggar */
+    .tag-block{margin:6px 0 10px}
+    #tagInput{flex:1; border:1px solid rgba(148,163,184,.25); background:#0b1224; color:var(--fg); border-radius:12px; padding:10px 12px; outline:none}
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin:8px 0 2px}
+    .chip{display:inline-flex; align-items:center; gap:6px; padding:6px 10px; border-radius:999px; border:1px solid rgba(148,163,184,.25); background:#0a1222; color:var(--fg); font-weight:600; font-size:12px}
+    .chip button{border:1px solid rgba(148,163,184,.18); background:transparent; color:#cbd5e1; padding:0 6px; height:20px; line-height:20px; border-radius:8px; cursor:pointer}
+    .chip button:hover{border-color:rgba(148,163,184,.35)}
+    .chip.edit{gap:4px}
+    .chip.edit input.chip-edit{background:#0b1224; color:var(--fg); border:1px solid rgba(148,163,184,.35); border-radius:8px; padding:4px 8px; min-width:100px; outline:none}
+    .chip.edit button{height:22px; line-height:22px}
+    /* Markering för valda (lyser upp) */
+    .chip.on{ background:#0b1428; box-shadow: inset 0 0 0 2px var(--accent-2), 0 2px 8px rgba(0,0,0,.35); }
+    /* Handkursor i klickbara chip-rader */
+    #itemTagSelector .chip, #tagFilterChips .chip{ cursor:pointer; }
   </style>
 </head>
 <body>
@@ -107,6 +86,23 @@
         <input id="search" type="search" placeholder="Sök titel eller beskrivning…" aria-label="Sök"/>
         <button id="new" class="outline">Ny prompt</button>
       </div>
+
+      <!-- Hantera taggar: skapa/byt namn/ta bort (ej klick för filter här) -->
+      <div class="tag-block" aria-label="Hantera taggar">
+        <h3>Hantera taggar</h3>
+        <div class="row" style="margin-top:0">
+          <input id="tagInput" type="text" placeholder="Ny tagg…" aria-label="Ny tagg" />
+          <button id="tagAddBtn" class="outline" title="Lägg till tagg">Lägg till</button>
+        </div>
+        <div id="tagChips" class="chips" aria-live="polite"></div>
+      </div>
+
+      <!-- Filtrera på taggar: chip som i editorn (inga ✎/✕) -->
+      <div class="tag-block" aria-label="Filtrera på taggar">
+        <h3>Filtrera</h3>
+        <div id="tagFilterChips" class="chips" aria-live="polite"></div>
+      </div>
+
       <ul id="promptList" class="list" role="listbox" aria-label="Lista med sparade prompts">
         <li class="empty">Inga sparade prompts ännu.</li>
       </ul>
@@ -123,10 +119,14 @@
       <h1>Promptkopierare</h1>
       <div class="sub">Skriv eller klistra in din prompt. Snart kan du spara flera varianter med titel och beskrivning.</div>
 
+      <label>Taggar</label>
+      <div id="itemTagSelector" class="chips" aria-label="Alla taggar – klicka för att välja"></div>
+
       <label for="title">Titel</label>
       <input id="title" type="text" placeholder="Kort, tydlig titel…"/>
       <label for="desc">Beskrivning</label>
       <textarea id="desc" placeholder="Vad är syftet med prompten? Vilka parametrar?"></textarea>
+
       <label for="ta">Prompt</label>
       <textarea id="ta" placeholder="Klistra in din prompt här…"></textarea>
 
@@ -150,7 +150,7 @@
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
 
   <script>
-    // === Local Storage + Prompt Manager (Steg 2) ===
+    // === Elementreferenser ===
     const els = {
       title: document.getElementById('title'),
       desc: document.getElementById('desc'),
@@ -169,301 +169,367 @@
       export: document.getElementById('export'),
       importBtn: document.getElementById('import'),
       importFile: document.getElementById('importFile'),
-      exportHelper: document.getElementById('exportHelper')
+      exportHelper: document.getElementById('exportHelper'),
+      itemTagSelector: document.getElementById('itemTagSelector'),
+      tagFilterChips: document.getElementById('tagFilterChips')
     };
 
-    // Ny lagringsstruktur
-    const LS_TEXT = 'promptkopierare:text';                 // bakåtkompatibel auto-save för fristående textarea
-    const LS_ITEMS = 'promptkopierare:v2:items';            // array av objekt
-    const LS_CURRENT = 'promptkopierare:currentId';         // aktivt id
+    // --- Hämta dessa tidigt (undvik TDZ) ---
+    const tagInput  = document.getElementById('tagInput');
+    const tagAddBtn = document.getElementById('tagAddBtn');
+    const tagChips  = document.getElementById('tagChips');      // hantera-taggar
+    const tagFilterChips = document.getElementById('tagFilterChips'); // filter-chip
 
-    // Utils
+    // === Lagringsnycklar ===
+    const LS_TEXT   = 'promptkopierare:text';
+    const LS_ITEMS  = 'promptkopierare:v2:items';
+    const LS_CURRENT= 'promptkopierare:currentId';
+    const LS_TAGS   = 'promptkopierare:v2:tags';
+
+    // === Utils ===
     const uuid = () => (crypto?.randomUUID?.() ?? `id_${Date.now()}_${Math.random().toString(36).slice(2,8)}`);
-    const loadItems = () => {
-      try{ const arr = JSON.parse(localStorage.getItem(LS_ITEMS) || '[]'); return Array.isArray(arr) ? arr : []; }catch{ return []; }
-    };
+    const loadItems = () => { try{ const arr = JSON.parse(localStorage.getItem(LS_ITEMS) || '[]'); return Array.isArray(arr) ? arr : []; }catch{ return []; } };
     const saveItems = (items) => localStorage.setItem(LS_ITEMS, JSON.stringify(items));
     const getCurrent = () => localStorage.getItem(LS_CURRENT) || null;
     const setCurrent = (id) => id ? localStorage.setItem(LS_CURRENT, id) : localStorage.removeItem(LS_CURRENT);
 
-    function showToast(msg){
-      els.toast.textContent = msg; els.toast.classList.add('show');
-      clearTimeout(showToast.tid); showToast.tid = setTimeout(()=> els.toast.classList.remove('show'), 1600);
-    }
-    function updateStat(){
-      const len = els.ta.value.length; els.stat.textContent = `${len} ${len === 1 ? 'tecken' : 'tecken'}`;
-    }
+    function showToast(msg){ els.toast.textContent = msg; els.toast.classList.add('show'); clearTimeout(showToast.tid); showToast.tid = setTimeout(()=> els.toast.classList.remove('show'), 1600); }
+    function updateStat(){ const len = els.ta.value.length; els.stat.textContent = `${len} ${len === 1 ? 'tecken' : 'tecken'}`; }
 
-    // UI state helpers
-    function setMode(mode){
-      // mode: 'new' | 'edit'
-      if(mode === 'new'){
-        els.update.disabled = true; els.remove.disabled = true; els.save.disabled = false;
-      }else{
-        els.update.disabled = false; els.remove.disabled = false; els.save.disabled = false; // tillåt spara som ny
-      }
-    }
+    function escapeHTML(s){ return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m])); }
+
+    // === Lista ===
     function highlightSelected(id){
       [...els.list.querySelectorAll('.item[aria-selected]')].forEach(li=> li.setAttribute('aria-selected','false'));
       const li = els.list.querySelector(`.item[data-id="${CSS.escape(id)}"]`);
       if(li){ li.setAttribute('aria-selected','true'); li.scrollIntoView({block:'nearest'}); }
     }
 
-    // Render lista
+    // Aktiva taggfilter (vänster → filterdelen) — OR-logik
+    let tagFilterSet = new Set();
+
+    function itemMatchesTags(item){
+      if(tagFilterSet.size===0) return true; // inget filter aktivt
+      const lows = (item.tags||[]).map(t=> String(t).toLocaleLowerCase('sv'));
+      for(const sel of tagFilterSet){ if(lows.includes(sel)) return true; } // OR-logik: någon vald tagg räcker
+      return false;
+    }
+
     function renderList(filter=''){
       const items = loadItems();
       const term = filter.trim().toLowerCase();
-      const filtered = !term ? items : items.filter(it =>
-        it.title.toLowerCase().includes(term) ||
-        (it.desc||'').toLowerCase().includes(term) ||
-        (it.text||'').toLowerCase().includes(term)
-      );
-
+      const filtered = items.filter(it => {
+        const tm = !term || ((it.title||'').toLowerCase().includes(term) || (it.desc||'').toLowerCase().includes(term) || (it.text||'').toLowerCase().includes(term));
+        if(!tm) return false;
+        return itemMatchesTags(it);
+      });
       els.list.innerHTML = '';
-      if(filtered.length === 0){
-        const li = document.createElement('li'); li.className='empty'; li.textContent = 'Inga sparade prompts ännu.'; els.list.appendChild(li);
-        return;
-      }
+      if(filtered.length === 0){ const li = document.createElement('li'); li.className='empty'; li.textContent='Inga sparade prompts ännu.'; els.list.appendChild(li); return; }
       for(const it of filtered){
         const li = document.createElement('li');
-        li.className = 'item';
-        li.setAttribute('role','option');
-        li.dataset.id = it.id;
-        li.innerHTML = `<div class="t">${escapeHTML(it.title || '(Namnlös)')}</div><div class="d">${escapeHTML(it.desc || '')}</div>`;
-        const isCur = it.id === getCurrent();
-        li.setAttribute('aria-selected', isCur ? 'true' : 'false');
+        li.className='item'; li.setAttribute('role','option'); li.dataset.id = it.id;
+        li.innerHTML = `<div class="t">${escapeHTML(it.title||'(Namnlös)')}</div><div class="d">${escapeHTML(it.desc||'')}</div>`;
+        li.setAttribute('aria-selected', it.id === getCurrent() ? 'true' : 'false');
         li.title = `ID: ${it.id}`;
         els.list.appendChild(li);
       }
       const cur = getCurrent(); if(cur) highlightSelected(cur);
     }
 
-    // Editor helpers
+    // === Tagg-hjälp ===
+    let editorTags = []; // aktuell editors taggar
+    const normalizeTags = (tags)=>{
+      const map = new Map();
+      for(const t of (tags||[])){
+        const k = String(t).trim(); if(!k) continue; map.set(k.toLocaleLowerCase('sv'), k);
+      }
+      return Array.from(map.values()).sort((a,b)=> a.localeCompare(b,'sv',{sensitivity:'base'}));
+    };
+    const readTagsRaw = () => { try{ const v = JSON.parse(localStorage.getItem(LS_TAGS) || '[]'); return Array.isArray(v)?v:[]; }catch{ return []; } };
+    const saveTags = (tags) => { const arr = normalizeTags(tags); localStorage.setItem(LS_TAGS, JSON.stringify(arr)); return arr; };
+
+    function addItemTag(name){
+      const n = String(name||'').trim(); if(!n) return;
+      const low = n.toLocaleLowerCase('sv');
+      if(editorTags.some(t => t.toLocaleLowerCase('sv')===low)) return;
+      editorTags.push(n); editorTags = normalizeTags(editorTags);
+      renderItemTagSelector();
+    }
+    function removeItemTag(name){
+      const low = String(name||'').toLocaleLowerCase('sv');
+      editorTags = editorTags.filter(t => t.toLocaleLowerCase('sv') !== low);
+      renderItemTagSelector();
+    }
+
+    // --- Alla globala taggar som väljbara chips i editorn ---
+    function renderItemTagSelector(){
+      const cont = els.itemTagSelector; if(!cont) return;
+      cont.innerHTML = '';
+      const all = saveTags(readTagsRaw()); // normaliserad + sorterad
+      if(all.length === 0){ const hint=document.createElement('div'); hint.className='small'; hint.style.opacity='.8'; hint.textContent='Inga globala taggar ännu'; cont.appendChild(hint); return; }
+      const selected = new Set((editorTags||[]).map(t=> t.toLocaleLowerCase('sv')));
+      for(const name of all){
+        const chip = document.createElement('div'); chip.className='chip'; chip.dataset.name=name;
+        const on = selected.has(name.toLocaleLowerCase('sv'));
+        if(on) chip.classList.add('on');
+        chip.setAttribute('role','checkbox'); chip.setAttribute('aria-checked', on? 'true':'false');
+        chip.title = on ? 'Klicka för att avmarkera' : 'Klicka för att välja';
+        chip.innerHTML = `<span class="chip-text">${escapeHTML(name)}</span>`;
+        cont.appendChild(chip);
+      }
+    }
+
+    // === Editor ===
     function clearEditor(){
-      els.title.value = ''; els.desc.value = ''; els.ta.value = '';
-      updateStat(); setCurrent(null); setMode('new'); renderList(els.search.value);
-      // nollställ ev. beväpnad radera-knapp
-      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
+      els.title.value=''; els.desc.value=''; els.ta.value=''; updateStat(); setCurrent(null); setMode('new'); renderList(els.search.value);
+      editorTags = []; renderItemTagSelector();
+      els.remove.classList.remove('armed'); els.remove.textContent='Ta bort'; delete els.remove.dataset.arm;
     }
     function loadIntoEditor(item){
-      els.title.value = item.title || ''; els.desc.value = item.desc || ''; els.ta.value = item.text || '';
-      updateStat(); setCurrent(item.id); setMode('edit'); highlightSelected(item.id);
-      // nollställ ev. beväpnad radera-knapp
-      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
+      els.title.value=item.title||''; els.desc.value=item.desc||''; els.ta.value=item.text||''; updateStat(); setCurrent(item.id); setMode('edit'); highlightSelected(item.id);
+      editorTags = normalizeTags(item.tags || []); renderItemTagSelector();
+      els.remove.classList.remove('armed'); els.remove.textContent='Ta bort'; delete els.remove.dataset.arm;
     }
+    function setMode(mode){ if(mode==='new'){ els.update.disabled=true; els.remove.disabled=true; els.save.disabled=false; } else { els.update.disabled=false; els.remove.disabled=false; els.save.disabled=false; } }
 
-    // Escape helper for safe HTML injection
-    function escapeHTML(s){
-      return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
-    }
-
-    // Init: försök ladda aktiv prompt, annars fristående text (bakåtkompatibel)
+    // === Init ===
     (function init(){
-      const items = loadItems();
       renderList('');
+      renderTags(); // uppdaterar hantering + filter + editorns väljare
+      renderItemTagSelector();
+      const items = loadItems();
       const curId = getCurrent();
-      if(curId){
-        const it = items.find(x => x.id === curId);
-        if(it) loadIntoEditor(it); else { setCurrent(null); }
-      }
-      if(!getCurrent()){
-        els.ta.value = localStorage.getItem(LS_TEXT) ?? '';
-        updateStat(); setMode('new');
-      }
+      if(curId){ const it = items.find(x=>x.id===curId); if(it) loadIntoEditor(it); else setCurrent(null); }
+      if(!getCurrent()){ els.ta.value = localStorage.getItem(LS_TEXT) ?? ''; updateStat(); setMode('new'); }
     })();
 
-    // Auto-stat + (endast i 'new'-läge) backcompat autosave av textarea
-    els.ta.addEventListener('input', () => {
-      if(!getCurrent()) localStorage.setItem(LS_TEXT, els.ta.value);
-      updateStat();
-    });
-
-    // Ny prompt-knapp: rensa till nytt
-    els.newBtn.addEventListener('click', () => { clearEditor(); showToast('Ny tom prompt'); els.title.focus(); });
-
-    // Spara som ny
-    els.save.addEventListener('click', () => {
-      const title = els.title.value.trim();
-      const text = els.ta.value.trim();
+    // === Händelser (editor/lista) ===
+    els.ta.addEventListener('input', ()=>{ if(!getCurrent()) localStorage.setItem(LS_TEXT, els.ta.value); updateStat(); });
+    els.newBtn.addEventListener('click', ()=>{ clearEditor(); showToast('Ny tom prompt'); els.title.focus(); });
+    els.save.addEventListener('click', ()=>{
+      const title = els.title.value.trim(); const text = els.ta.value.trim();
       if(!title && !text){ showToast('Lägg till minst titel eller prompt'); return; }
-      const item = {
-        id: uuid(),
-        title: title || '(Namnlös)',
-        desc: els.desc.value.trim(),
-        text,
-        createdAt: Date.now(),
-        updatedAt: Date.now()
-      };
-      const items = loadItems(); items.unshift(item); saveItems(items);
-      setCurrent(item.id); renderList(els.search.value); loadIntoEditor(item);
-      showToast('Prompt sparad');
+      const item = { id: uuid(), title: title || '(Namnlös)', desc: els.desc.value.trim(), text, tags: normalizeTags(editorTags), createdAt: Date.now(), updatedAt: Date.now() };
+      const items = loadItems(); items.unshift(item); saveItems(items); setCurrent(item.id); renderList(els.search.value); loadIntoEditor(item); showToast('Prompt sparad');
     });
-
-    // Uppdatera befintlig
-    els.update.addEventListener('click', () => {
+    els.update.addEventListener('click', ()=>{
       const id = getCurrent(); if(!id){ showToast('Ingen vald att uppdatera'); return; }
-      const items = loadItems(); const idx = items.findIndex(x => x.id === id);
-      if(idx === -1){ showToast('Hittar inte posten'); return; }
-      items[idx] = { ...items[idx], title: els.title.value.trim() || '(Namnlös)', desc: els.desc.value.trim(), text: els.ta.value.trim(), updatedAt: Date.now() };
-      saveItems(items); renderList(els.search.value); highlightSelected(id);
-      showToast('Uppdaterad');
+      const items = loadItems(); const idx = items.findIndex(x=>x.id===id); if(idx===-1){ showToast('Hittar inte posten'); return; }
+      items[idx] = { ...items[idx], title: els.title.value.trim() || '(Namnlös)', desc: els.desc.value.trim(), text: els.ta.value.trim(), tags: normalizeTags(editorTags), updatedAt: Date.now() };
+      saveItems(items); renderList(els.search.value); highlightSelected(id); showToast('Uppdaterad');
     });
-
-    // Ta bort
-    els.remove.addEventListener('click', () => {
-      const id = getCurrent();
-      if(!id){ showToast('Välj en prompt i listan först'); return; }
-      const currentItem = loadItems().find(x => x.id === id);
-      const name = currentItem?.title || 'vald prompt';
-
-      // Tvåstegsradering (fallback när window.confirm blockeras i preview)
+    els.remove.addEventListener('click', ()=>{
+      const id = getCurrent(); if(!id){ showToast('Välj en prompt i listan först'); return; }
+      const currentItem = loadItems().find(x=>x.id===id); const name = currentItem?.title || 'vald prompt';
       if(!els.remove.dataset.arm){
-        els.remove.dataset.arm = '1';
-        els.remove.classList.add('armed');
-        els.remove.textContent = 'Bekräfta borttag';
+        els.remove.dataset.arm='1'; els.remove.classList.add('armed'); els.remove.textContent='Bekräfta borttag';
         showToast(`Klicka igen för att ta bort "${name}"`);
-        clearTimeout(els.remove._armTid);
-        els.remove._armTid = setTimeout(()=>{
-          delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort';
-        }, 2500);
+        clearTimeout(els.remove._armTid); els.remove._armTid = setTimeout(()=>{ delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent='Ta bort'; }, 2500);
         return;
       }
-
-      // Andra klicket: genomför borttag
-      delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort';
-      const items = loadItems().filter(x => x.id !== id);
-      saveItems(items);
-      renderList(els.search.value);
-      clearEditor();
-      showToast('Borttagen');
+      delete els.remove.dataset.arm; els.remove.classList.remove('armed'); els.remove.textContent='Ta bort';
+      const items = loadItems().filter(x=>x.id!==id); saveItems(items); renderList(els.search.value); clearEditor(); showToast('Borttagen');
     });
+    els.list.addEventListener('click', (e)=>{ const li = e.target.closest('.item'); if(!li) return; const it = loadItems().find(x=>x.id===li.dataset.id); if(!it) return; els.remove.classList.remove('armed'); els.remove.textContent='Ta bort'; delete els.remove.dataset.arm; loadIntoEditor(it); });
+    els.search.addEventListener('input', (e)=> renderList(e.target.value));
 
-    // Lista: välj post
-    els.list.addEventListener('click', (e) => {
-      const li = e.target.closest('.item'); if(!li) return;
-      const id = li.dataset.id; const it = loadItems().find(x => x.id === id); if(!it) return;
-      // avväpna radera när man byter val
-      els.remove.classList.remove('armed'); els.remove.textContent = 'Ta bort'; delete els.remove.dataset.arm;
-      loadIntoEditor(it);
-    });
+    // Toggle-val på globala chips i editorn
+    if(els.itemTagSelector){
+      els.itemTagSelector.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.chip'); if(!chip) return;
+        const name = chip.dataset.name || chip.querySelector('.chip-text')?.textContent || '';
+        const low = name.toLocaleLowerCase('sv');
+        const has = editorTags.some(t => t.toLocaleLowerCase('sv')===low);
+        if(has) removeItemTag(name); else addItemTag(name);
+      });
+    }
 
-    // Sök/filter
-    els.search.addEventListener('input', (e) => { renderList(e.target.value); });
-  
-    // === Export/Import (Backup & Återställ) ===
-    els.export.addEventListener('click', () => {
+    // === Globala taggar (vänsterspalt) ===
+    // (Redan deklarerade ovan: tagInput, tagAddBtn, tagChips, tagFilterChips)
+
+    // Ritar båda sektionerna + synkar editor-väljaren
+    function renderTags(){
+      renderTagManager();
+      renderFilterChips();
+      renderItemTagSelector();
+    }
+
+    function renderTagManager(){
+      if(!tagChips) return;
+      const tags = saveTags(readTagsRaw());
+      tagChips.innerHTML='';
+      if(tags.length===0){ const hint=document.createElement('div'); hint.className='small'; hint.style.opacity='.8'; hint.textContent='Inga taggar ännu'; tagChips.appendChild(hint); return; }
+      for(const name of tags){
+        const chip = document.createElement('div'); chip.className='chip'; chip.dataset.name=name; // OBS: inga .on-markeringar här
+        chip.innerHTML = `<span class="chip-text">${escapeHTML(name)}</span>`+
+                         `<button class="chip-rename" title="Byt namn" aria-label="Byt namn">✎</button>`+
+                         `<button class="chip-del" title="Ta bort" aria-label="Ta bort">✕</button>`;
+        tagChips.appendChild(chip);
+      }
+    }
+
+    function renderFilterChips(){
+      if(!tagFilterChips) return;
+      const tags = saveTags(readTagsRaw());
+      tagFilterChips.innerHTML='';
+      if(tags.length===0){ const hint=document.createElement('div'); hint.className='small'; hint.style.opacity='.8'; hint.textContent='Inga taggar att filtrera på'; tagFilterChips.appendChild(hint); return; }
+      for(const name of tags){
+        const chip = document.createElement('div'); chip.className='chip'; chip.dataset.name=name;
+        const on = tagFilterSet.has(name.toLocaleLowerCase('sv'));
+        if(on) chip.classList.add('on');
+        chip.setAttribute('role','checkbox'); chip.setAttribute('aria-checked', on? 'true':'false');
+        chip.title = on ? 'Klicka för att avmarkera filter' : 'Klicka för att filtrera på denna tagg';
+        chip.innerHTML = `<span class="chip-text">${escapeHTML(name)}</span>`; // inga ✎/✕ här
+        tagFilterChips.appendChild(chip);
+      }
+    }
+
+    function addTag(name){
+      const n = String(name||'').trim(); if(!n){ showToast('Tomt taggnamn'); return; }
+      const low = n.toLocaleLowerCase('sv'); const all = readTagsRaw();
+      if(all.some(t=> String(t).toLocaleLowerCase('sv')===low)){ showToast('Taggen finns redan'); return; }
+      all.push(n); saveTags(all); renderTags(); showToast('Tagg skapad'); if(tagInput) tagInput.value='';
+    }
+
+    function armOrRemoveTag(name, chip){
+      const delBtn = chip?.querySelector('.chip-del');
+      if(chip && !chip.dataset.arm){
+        chip.dataset.arm='1'; if(delBtn) delBtn.textContent='Bekräfta';
+        clearTimeout(chip._armTid); chip._armTid = setTimeout(()=>{ delete chip.dataset.arm; if(delBtn) delBtn.textContent='✕'; }, 2500);
+        showToast(`Klicka igen för att ta bort \"${name}\"`);
+        return false;
+      }
+      if(chip){ delete chip.dataset.arm; if(delBtn) delBtn.textContent='✕'; }
+      const low = name.toLocaleLowerCase('sv');
+      if(tagFilterSet.has(low)) tagFilterSet.delete(low); // rensa aktivt filter om taggen tas bort
+      const kept = readTagsRaw().filter(t=> t.toLocaleLowerCase('sv') !== low);
+      saveTags(kept); renderTags(); renderList(els.search.value); showToast('Tagg borttagen');
+      return true;
+    }
+
+    function startRenameTag(oldName, chip){
+      if(!chip || chip.classList.contains('edit')) return;
+      chip.classList.add('edit'); chip.innerHTML='';
+      const label=document.createElement('span'); label.textContent='Namn:'; label.style.opacity='.7'; label.style.fontWeight='600';
+      const inp=document.createElement('input'); inp.type='text'; inp.value=oldName; inp.className='chip-edit'; inp.setAttribute('aria-label','Nytt taggnamn');
+      const ok=document.createElement('button'); ok.className='chip-save'; ok.textContent='✓'; ok.title='Spara';
+      const cancel=document.createElement('button'); cancel.className='chip-cancel'; cancel.textContent='Avbryt'; cancel.title='Avbryt';
+      chip.append(label, inp, ok, cancel); inp.focus(); inp.select();
+      const finalize = () => {
+        const n = String(inp.value||'').trim(); if(!n){ showToast('Tomt namn — avbrutet'); renderTags(); return; }
+        const lowOld = oldName.toLocaleLowerCase('sv'); const lowNew = n.toLocaleLowerCase('sv');
+        const arr = readTagsRaw();
+        if(arr.some(t=> t.toLocaleLowerCase('sv')===lowNew && lowNew!==lowOld)){ showToast('Taggen finns redan'); renderTags(); return; }
+        const updated = arr.map(t=> (t.toLocaleLowerCase('sv')===lowOld ? n : t)); saveTags(updated);
+        if(tagFilterSet.has(lowOld)){ tagFilterSet.delete(lowOld); tagFilterSet.add(lowNew); } // behåll filterval
+        renderTags(); renderList(els.search.value); showToast('Tagg uppdaterad');
+        editorTags = editorTags.map(t => (t.toLocaleLowerCase('sv')===lowOld ? n : t));
+        renderItemTagSelector();
+      };
+      const cancelEdit = ()=> renderTags();
+      ok.addEventListener('click', finalize); cancel.addEventListener('click', cancelEdit);
+      inp.addEventListener('keydown', (e)=>{ if(e.key==='Enter'){ e.preventDefault(); finalize(); } if(e.key==='Escape'){ e.preventDefault(); cancelEdit(); } });
+    }
+
+    // Hantera-taggar: endast knapparna är klickbara
+    if(tagChips){
+      tagChips.addEventListener('click', (e)=>{
+        const btn = e.target.closest('button'); if(!btn) return; // klick på chip utan knapp ignoreras (ingen filtertoggle här)
+        const chip = e.target.closest('.chip'); if(!chip) return;
+        const name = chip.dataset.name || chip.querySelector('.chip-text')?.textContent || '';
+        if(btn.classList.contains('chip-del')){ armOrRemoveTag(name, chip); }
+        else if(btn.classList.contains('chip-rename')){ startRenameTag(name, chip); }
+        else if(btn.classList.contains('chip-save')){ /* handled in finalize */ }
+        else if(btn.classList.contains('chip-cancel')){ renderTags(); }
+      });
+    }
+
+    // Filter-taggar: klick togglar `.on` och filtrerar (OR-logik)
+    if(tagFilterChips){
+      tagFilterChips.addEventListener('click', (e)=>{
+        const chip = e.target.closest('.chip'); if(!chip) return;
+        const name = chip.dataset.name || chip.querySelector('.chip-text')?.textContent || '';
+        const low = name.toLocaleLowerCase('sv');
+        if(tagFilterSet.has(low)) tagFilterSet.delete(low); else tagFilterSet.add(low);
+        renderFilterChips();
+        renderList(els.search.value);
+      });
+    }
+
+    // === Export/Import ===
+    els.export.addEventListener('click', ()=>{
       const items = loadItems();
       const payload = { app: 'promptkopierare', version: 1, exportedAt: new Date().toISOString(), items };
       const json = JSON.stringify(payload, null, 2);
-      try {
-        const blob = new Blob([json], { type: 'application/json' });
+      try{
+        const blob = new Blob([json], {type:'application/json'});
         const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `prompts-${new Date().toISOString().slice(0,10)}.json`;
-        // Visa reservlänk/knapp för manuell nedladdning
+        const a = document.createElement('a'); a.href=url; a.download = `prompts-${new Date().toISOString().slice(0,10)}.json`;
         els.exportHelper.innerHTML = '';
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = a.download;
-        link.textContent = 'Ladda ner fil (om det inte startar)';
-        els.exportHelper.appendChild(link);
-        // Trigga direktnedladdning
-        a.click();
-        setTimeout(() => { URL.revokeObjectURL(url); }, 5000);
-        showToast('Export startad');
-      } catch (e) {
-        try {
-          navigator.clipboard.writeText(json);
-          showToast('JSON kopierad till urklipp (fallback)');
-        } catch {
-          els.exportHelper.textContent = 'Kunde inte exportera. Kopiera JSON manuellt:';
-          const pre = document.createElement('pre');
-          pre.textContent = json;
-          pre.style.whiteSpace = 'pre-wrap';
-          pre.style.marginTop = '8px';
-          els.exportHelper.appendChild(pre);
+        const link = document.createElement('a'); link.href=url; link.download=a.download; link.textContent='Ladda ner fil (om det inte startar)'; els.exportHelper.appendChild(link);
+        a.click(); setTimeout(()=> URL.revokeObjectURL(url), 5000); showToast('Export startad');
+      }catch{
+        try{ navigator.clipboard.writeText(json); showToast('JSON kopierad till urklipp (fallback)'); }
+        catch{
+          els.exportHelper.textContent='Kunde inte exportera. Kopiera JSON manuellt:';
+          const pre=document.createElement('pre'); pre.textContent=json; pre.style.whiteSpace='pre-wrap'; pre.style.marginTop='8px'; els.exportHelper.appendChild(pre);
         }
       }
     });
 
-    els.importBtn.addEventListener('click', () => els.importFile.click());
-    els.importFile.addEventListener('change', async (e) => {
-      const file = e.target.files?.[0];
-      if (!file) return;
-      try {
-        const text = await file.text();
-        const data = JSON.parse(text);
+    els.importBtn.addEventListener('click', ()=> els.importFile.click());
+    els.importFile.addEventListener('change', async (e)=>{
+      const file = e.target.files?.[0]; if(!file) return;
+      try{
+        const text = await file.text(); const data = JSON.parse(text);
         const incoming = (data && Array.isArray(data.items)) ? data.items : (Array.isArray(data) ? data : []);
-        if (!incoming.length) { showToast('Ingen data hittades'); return; }
-
-        const existing = loadItems();
-        const map = new Map(existing.map(it => [it.id, it]));
-
-        for (const it of incoming) {
-          if (!it || typeof it !== 'object') continue;
-          let id = it.id || uuid();
-          if (map.has(id)) id = uuid();
-          map.set(id, {
-            ...it,
-            id,
-            title: (it.title || '(Namnlös)').trim(),
-            text: (it.text || '').trim(),
-          });
-        }
-
-        const merged = Array.from(map.values()).sort((a,b) => (b.updatedAt||0) - (a.updatedAt||0));
-        saveItems(merged);
-        renderList(els.search.value);
-        showToast('Import klar');
-      } catch {
-        showToast('Kunde inte läsa filen');
-      } finally {
-        e.target.value = '';
-      }
+        if(!incoming.length){ showToast('Ingen data hittades'); return; }
+        const existing = loadItems(); const map = new Map(existing.map(it=>[it.id,it]));
+        for(const it of incoming){ if(!it || typeof it!== 'object') continue; let id = it.id || uuid(); if(map.has(id)) id = uuid(); map.set(id, { ...it, id, title:(it.title||'(Namnlös)').trim(), text:(it.text||'').trim() }); }
+        const merged = Array.from(map.values()).sort((a,b)=>(b.updatedAt||0)-(a.updatedAt||0)); saveItems(merged); renderList(els.search.value); showToast('Import klar');
+      }catch{ showToast('Kunde inte läsa filen'); }
+      finally{ e.target.value=''; }
     });
-  
+
     // === Kopiera / Markera / Rensa ===
-    els.copy.addEventListener('click', async () => {
-      const text = els.ta.value ?? '';
-      if (!text) { showToast('Inget att kopiera'); return; }
-      try {
-        // Fungerar på https (GitHub Pages) och med användargest
-        await navigator.clipboard.writeText(text);
-        showToast('Kopierat till urklipp');
-      } catch (err) {
-        try {
-          els.ta.focus(); els.ta.select();
-          const ok = document.execCommand('copy');
-          window.getSelection()?.removeAllRanges?.();
-          showToast(ok ? 'Kopierat (fallback)' : 'Kunde inte kopiera — använd Ctrl/Cmd+C');
-        } catch {
-          showToast('Kunde inte kopiera — använd Ctrl/Cmd+C');
-        }
+    els.copy.addEventListener('click', async ()=>{
+      const text = els.ta.value ?? ''; if(!text){ showToast('Inget att kopiera'); return; }
+      try{ await navigator.clipboard.writeText(text); showToast('Kopierat till urklipp'); }
+      catch{
+        try{ els.ta.focus(); els.ta.select(); const ok = document.execCommand('copy'); window.getSelection()?.removeAllRanges?.(); showToast(ok ? 'Kopierat (fallback)' : 'Kunde inte kopiera — använd Ctrl/Cmd+C'); }
+        catch{ showToast('Kunde inte kopiera — använd Ctrl/Cmd+C'); }
       }
     });
+    els.selectBtn.addEventListener('click', ()=>{ els.ta.focus(); els.ta.select(); showToast('Markerat — Ctrl/Cmd+C för att kopiera'); });
+    els.clearBtn.addEventListener('click', ()=>{ if(els.ta.value && !confirm('Rensa texten?')) return; els.ta.value=''; if(!getCurrent()) localStorage.removeItem(LS_TEXT); updateStat(); els.ta.focus(); showToast('Rensat'); });
 
-    els.selectBtn.addEventListener('click', () => {
-      els.ta.focus();
-      els.ta.select();
-      showToast('Markerat — Ctrl/Cmd+C för att kopiera');
-    });
-
-    els.clearBtn.addEventListener('click', () => {
-      if (els.ta.value && !confirm('Rensa texten?')) return;
-      els.ta.value = '';
-      if (!getCurrent()) localStorage.removeItem(LS_TEXT); // rensa bara autosave om ingen post är vald
-      updateStat();
-      els.ta.focus();
-      showToast('Rensat');
-    });
-
-    // === Mini-självtest ("testfall") ===
+    // === Mini-självtest ===
     (function selfTest(){
-      const keys = ['title','desc','ta','save','update','remove','newBtn','search','list','copy','selectBtn','clearBtn','export','importBtn','importFile'];
-      const missing = keys.filter(k => !els[k]);
-      if(missing.length){ console.error('Init error – saknar element:', missing); }
-      else { console.log('Self-test OK', new Date().toISOString()); }
+      const keys=['title','desc','ta','save','update','remove','newBtn','search','list','copy','selectBtn','clearBtn','export','importBtn','importFile','itemTagSelector','tagFilterChips'];
+      const missing = keys.filter(k=>!els[k]); if(missing.length){ console.error('Init error – saknar element:', missing); } else { console.log('Self-test OK', new Date().toISOString()); }
+    })();
+
+    // === Extra testfall – rena funktioner (OR-logik) ===
+    ;(function selfTestTagsPure(){
+      const out = [];
+      const assertEq = (name, got, exp)=>{ const pass = JSON.stringify(got)===JSON.stringify(exp); out.push([name, pass, got, exp]); if(!pass) console.error('TEST FAIL', name, {got, exp}); };
+      const normalizeTagsFn = (arr)=>normalizeTags(arr);
+      assertEq('normalize/sort', normalizeTagsFn(['devops','DevOps',' qa ','QA','A']), ['A','DevOps','QA']);
+      assertEq('ignore blanks', normalizeTagsFn(['','  ','X']), ['X']);
+      assertEq('uniqueness', normalizeTagsFn(['a','A','ä','Ä']), ['A','Ä']);
+      // OR-filterlogik
+      tagFilterSet = new Set(['a','b']);
+      const item1 = {tags:['A','C']};    // har A → ska visas
+      const item2 = {tags:['B']};        // har B → ska visas
+      const item3 = {tags:['C']};        // har ingen → ska döljas
+      const item4 = {tags:[]};           // tom → döljas
+      assertEq('item1 (har A)', (function(){return itemMatchesTags(item1)})(), true);
+      assertEq('item2 (har B)', (function(){return itemMatchesTags(item2)})(), true);
+      assertEq('item3 (har ingen)', (function(){return itemMatchesTags(item3)})(), false);
+      assertEq('item4 (tom)', (function(){return itemMatchesTags(item4)})(), false);
+      tagFilterSet = new Set();
+      assertEq('no filter passes (allt syns)', (function(){return itemMatchesTags(item4)})(), true);
+      console.log('Tag/filter (OR) testcases:', out);
     })();
   </script>
 </body>
